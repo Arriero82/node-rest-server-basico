@@ -42,13 +42,14 @@ const putUsers = async (req = request, res = response) => {
 };
 
 const deleteUsers = async (req = request, res = response) => {
-  const {id} = req.params 
+  const {id} = req.params;
 
   //eliminacion de la base de datos del usuario
   //const usuario = await Usuario.findByIdAndDelete(id)
 
-  await Usuario.findByIdAndUpdate(id, {estado: false})
-  res.json(`Usuario con Id ${id} fue eliminado correctamente`);
+  const user = await Usuario.findByIdAndUpdate(id, {estado: false})
+  const usuarioAutenticado = req.usuario;
+  res.json({user, usuarioAutenticado});
 };
 
 const patchUsers = (req = request, res = response) => {
